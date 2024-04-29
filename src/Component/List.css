@@ -1,0 +1,28 @@
+.table{
+    align-content: center; 
+    width: '60%';
+    border-width: 2px;
+    padding: 2px;
+}
+
+.addButton{
+    background-color: aquamarine !important;
+    color: black;
+    align-items: center;
+}
+
+.actions{
+    display: flex;
+    gap: 10px;
+}
+.editButton{
+    background-color:rgb(185, 136, 231) !important;
+    color: black;
+    margin-right: 20px;
+}
+
+.delButton{
+    background-color: rgb(245, 75, 75) !important;
+    color: black;
+    margin-right: 10px;
+}

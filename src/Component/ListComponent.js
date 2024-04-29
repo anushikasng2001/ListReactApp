@@ -1,4 +1,6 @@
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
 import React, { Component } from 'react'
+import './List.css'
 
 class ListComponent extends Component {
     constructor(props) {
@@ -68,39 +70,43 @@ class ListComponent extends Component {
     
   render() {
     return (
-      <div>
-        <div margin-bottom='5px'>
-            <input type='text' value={this.state.input} onChange={this.handleItemChange} ref={this.inputRef}/>
-            <button onClick={() => {this.state.isEditing ? this.saveItem() : this.addItem()}}>
+      <Grid>
+        <Grid margin-bottom='5px'>
+            <TextField variant='filled' type='text' value={this.state.input} onChange={this.handleItemChange} ref={this.inputRef}/>
+            <Button variant='filled' className='addButton' onClick={() => {this.state.isEditing ? this.saveItem() : this.addItem()}}>
                 {this.state.isEditing ? 'Save Changes' : 'Add Item'}
-            </button>
-        </div>
-        <table align='center' width='60%' border='2px' cellPadding='2px'>
-            <thead>
-                <tr>
-                    <td>Serial No.</td>
-                    <td>Item name</td>
-                    <td>Actions</td>
-                </tr>
-            </thead>
-            <tbody>
-                {this.state.items.map(
-                    (item, index) => {
-                        return (                               
-                            <tr key={index}>
-                                <td>{index}</td>
-                                <td>{item}</td>
-                                <td>
-                                    <button onClick={() => {this.editItem(item, index)}}>Edit</button>
-                                    <button onClick={() => {this.deleteItem(index)}}>Delete</button>
-                                </td>
-                            </tr>
-                        )
-                    }
-                )}
-            </tbody>
-        </table>
-      </div>
+            </Button>
+        </Grid>
+        <Grid className='table' item xs={12} md={6}>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align='center'>Serial No.</TableCell>
+                            <TableCell align='center'>Item name</TableCell>
+                            <TableCell align='center'>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.items.map(
+                            (item, index) => {
+                                return (                               
+                                    <TableRow key={index}>
+                                        <TableCell align='center'>{index}</TableCell>
+                                        <TableCell align='center'>{item}</TableCell>
+                                        <TableCell className='actions' align='center'>
+                                            <Button variant='filled' className='editButton' onClick={() => {this.editItem(item, index)}}>Edit</Button>
+                                            <Button variant='filled' className='delButton' onClick={() => {this.deleteItem(index)}}>Delete</Button>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            }
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Grid>
+      </Grid>
     )
   }
 }
