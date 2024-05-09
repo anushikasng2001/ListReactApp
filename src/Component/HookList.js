@@ -1,5 +1,6 @@
 import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
 import React, { useState } from 'react'
+import './List.css'
 
 function HookList() {
 
@@ -27,7 +28,11 @@ function HookList() {
     const saveItem = () => {
         setItems(prevItems => {
             const updatedItems = [...prevItems]
-            updatedItems[num] = input
+            if(input === ''){
+                return updatedItems
+            }else{
+                updatedItems[num] = input
+            }
             return updatedItems
         })
         setInput('')
