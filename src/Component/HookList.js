@@ -1,6 +1,6 @@
-import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
-import React, { useState } from 'react'
-import './List.css'
+import { Grid, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
+import React, { useEffect, useRef, useState } from 'react'
+import { Buttons, ListTable } from './StyledComp'
 
 function HookList() {
 
@@ -8,6 +8,13 @@ function HookList() {
     const [isEditing, setIsEditing] = useState(false)
     const [items, setItems] = useState([])
     const [num, setNum] = useState(0)
+
+    const inputRef = useRef()
+
+    useEffect(() => {
+        inputRef.current.focus()
+        console.log('component mounted')
+    }, [])
 
     const addItem = () => {
         const updatedItems = [...items]
@@ -50,19 +57,20 @@ function HookList() {
   return (
     <Grid>
         <Grid margin-bottom='5px'>
-            <TextField variant='filled' type='text' value={input} onChange={(event) => setInput(event.target.value)}/>
-            <Button variant='filled' className='addButton' onClick={() => {isEditing ? saveItem() : addItem()}}>
+            <TextField ref={inputRef} variant='filled' type='text' value={input} onChange={(event) => setInput(event.target.value)}/>
+            <Buttons variant='filled' addButton onClick={() => {isEditing ? saveItem() : addItem()}}>
                 {isEditing ? 'Save Changes' : 'Add Item'}
-            </Button>
+            </Buttons>
         </Grid>
         <Grid className='table' item xs={12} md={6}>
             <TableContainer component={Paper}>
-                <Table>
+                <ListTable>
+                    <caption>List of items </caption>
                     <TableHead>
                         <TableRow>
-                            <TableCell align='center'>Serial No.</TableCell>
-                            <TableCell align='center'>Item name</TableCell>
-                            <TableCell align='center'>Actions</TableCell>
+                            <TableCell align='center' scope='col'>Serial No.</TableCell>
+                            <TableCell align='center' scope='col'>Item name</TableCell>
+                            <TableCell align='center' scope='col'>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -70,18 +78,18 @@ function HookList() {
                             (item, index) => {
                                 return (                               
                                     <TableRow key={index}>
-                                        <TableCell align='center'>{index}</TableCell>
-                                        <TableCell align='center'>{item}</TableCell>
+                                        <TableCell align='center' >{index}</TableCell>
+                                        <TableCell align='center' scope='row'>{item}</TableCell>
                                         <TableCell className='actions' align='center'>
-                                            <Button variant='filled' className='editButton' onClick={() => editItem(item, index)}>Edit</Button>
-                                            <Button variant='filled' className='delButton' onClick={() => deleteItem(index)}>Delete</Button>
+                                            <Buttons variant='filled' editButton onClick={() => editItem(item, index)}>Edit</Buttons>
+                                            <Buttons variant='filled' delButton onClick={() => deleteItem(index)} >Delete</Buttons>
                                         </TableCell>
                                     </TableRow>
                                 )
                             }
                         )}
                     </TableBody>
-                </Table>
+                </ListTable>
             </TableContainer>
         </Grid>
       </Grid>
